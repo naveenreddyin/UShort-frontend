@@ -2,7 +2,7 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const baseURL = ''
+var baseURL = ''
 if(process.env == 'production'){
   baseURL = 'https://umsbackend.herokuapp.com/api';
 
