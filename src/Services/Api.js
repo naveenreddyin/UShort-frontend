@@ -2,7 +2,15 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-const create = (baseURL = 'http://localhost:8080/api') => {
+const baseURL = ''
+if(process.env == 'production'){
+  baseURL = 'https://umsbackend.herokuapp.com/api';
+
+}
+else {
+  baseURL = 'http://localhost:8080/api';
+}
+const create = (baseURL = baseURL) => {
   // ------
   // STEP 1
   // ------
