@@ -3,11 +3,11 @@ import apisauce from 'apisauce'
 
 // our "constructor"
 var baseAPIURL = '';
-if(process.env.NODE_ENV == 'production'){
+if(process.env.NODE_ENV === 'production'){
   baseAPIURL = 'https://umsbackend.herokuapp.com/api';
 
 }
-else {
+else if (process.env.NODE_ENV === 'development') {
   baseAPIURL = 'http://localhost:8080/api';
 
 }
