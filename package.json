@@ -14,7 +14,8 @@
     "redux-saga": "^0.15.3",
     "reduxsauce": "^0.5.0",
     "seamless-immutable": "^6.3.0",
-    "react-redux": "^5.0.4"
+    "react-redux": "^5.0.4",
+    "reactotron-apisauce": "^1.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
@@ -31,7 +32,6 @@
     "eslint": "^3.2.2",
     "eslint-plugin-react": "^6.0.0",
     "ramda": "^0.24.1",
-    "reactotron-apisauce": "^1.5.2",
     "reactotron-react-js": "^1.10.0",
     "reactotron-redux": "^1.5.2",
     "reactotron-redux-saga": "^1.5.2",
