@@ -2,15 +2,15 @@
 import apisauce from 'apisauce'
 
 // our "constructor"
-var baseURL = ''
+var baseAPIURL = '';
 if(process.env == 'production'){
-  baseURL = 'https://umsbackend.herokuapp.com/api';
+  baseAPIURL = 'https://umsbackend.herokuapp.com/api';
 
 }
 else {
-  baseURL = 'http://localhost:8080/api';
+  baseAPIURL = 'http://localhost:8080/api';
 }
-const create = (baseURL = baseURL) => {
+const create = (baseURL = baseAPIURL) => {
   // ------
   // STEP 1
   // ------
