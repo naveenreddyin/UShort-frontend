@@ -4,16 +4,37 @@ import './App.css';
 
 import { connect } from 'react-redux'
 import UserActions from './Redux/UserRedux'
-import { Button, Tabs, Tab, Grid, Row, Col } from 'react-bootstrap';
+import { Button, Tabs, Tab, Grid,
+  Row, Col, Form, FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
 
 class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {userEmail: '', newsletterKey: null, isFlipped: false};
-    this.props.fetchNewsletters()
+    this.state = {userEmail: '', password: null, registerEmail: null,
+    registerPassword: null, confirmRegisterPassword: null, };
   }
+
+
+  submitButtonClicked(){
+
+    console.log('clicked');
+
+  }
+
+  onPasswordChange(){
+    console.log('password');
+  }
+
+  onRegisterPasswordChange(){
+
+  }
+
+  submitRegisterButtonClicked(){
+
+  }
+
 
   render() {
     return (
@@ -26,11 +47,56 @@ class App extends Component {
           Please login or register below.
           <Grid>
             <Row>
-              <Col>
-                <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
-                  <Tab eventKey={1} title="Login">Tab 1 content</Tab>
-                  <Tab eventKey={2} title="Register">Tab 2 content</Tab>
+              <Col xs={6} md={4}>
+              </Col>
+              <Col xs={6} md={4}>
+                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
+                  <Tab eventKey={1} title="Login">
+                      <FormGroup controlId="formControlEmail">
+                        <ControlLabel>Email</ControlLabel>
+                        <FormControl  type="email" placeholder="Enter Email"/>
+                        <HelpBlock>Enter Email</HelpBlock>
+                      </FormGroup>
+
+                      <FormGroup controlId="formControlPassword">
+                        <ControlLabel>Password</ControlLabel>
+                        <FormControl  type="password" placeholder="Enter Password" onChange={this.onPasswordChange.bind(this)}/>
+                        <HelpBlock>Enter Password</HelpBlock>
+                      </FormGroup>
+
+                      <Button type="submit" onClick={this.submitButtonClicked.bind(this)}>
+                          Submit
+                      </Button>
+
+
+                  </Tab>
+                  <Tab eventKey={2} title="Register">
+                    <FormGroup controlId="formControlRegisterEmail">
+                      <ControlLabel>Email</ControlLabel>
+                      <FormControl  type="email" placeholder="Enter Email"/>
+                      <HelpBlock>Enter Email</HelpBlock>
+                    </FormGroup>
+
+                    <FormGroup controlId="formControlRegisterPassword">
+                      <ControlLabel>Password</ControlLabel>
+                      <FormControl  type="password" placeholder="Enter Password" onChange={this.onPasswordChange.bind(this)}/>
+                      <HelpBlock>Enter Password</HelpBlock>
+                    </FormGroup>
+
+                    <FormGroup controlId="formControlRegisterConfirmPassword">
+                      <ControlLabel>Confirm Password</ControlLabel>
+                      <FormControl  type="password" placeholder="Confirm Password" onChange={this.onPasswordChange.bind(this)}/>
+                      <HelpBlock>Enter same Password</HelpBlock>
+                    </FormGroup>
+
+                    <Button type="submit" onClick={this.submitRegisterButtonClicked.bind(this)}>
+                        Submit
+                    </Button>
+
+                  </Tab>
                 </Tabs>
+              </Col>
+              <Col xs={6} md={4}>
               </Col>
             </Row>
           </Grid>
