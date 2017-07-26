@@ -91,6 +91,12 @@ const create = (baseURL = baseAPIURL) => {
 //  }
 //  )
 
+const register = (email, password) => api.post('userses', {'email': email, 'password': password})
+
+const generateToken = (email) => api.get('generate/'+email)
+
+const validateToken = (token) => api.get('validate/'+token)
+
   const fetchNewsletters = () => api.get('userses/', {})
 //
 //  const checkIfBookingIsPossibleByTime = (date, time) => api.get('book_appointment_for_customer/'+date+" "+time)
@@ -114,10 +120,9 @@ const create = (baseURL = baseAPIURL) => {
 //    loginAndGetToken,
 //    getCustomerDetails,
 //    getAllRestaurants,
-    testApi,
-//    bookAppointmentForDoctor,
-//    fetchEventsByDoctor,
-//    checkIfBookingIsPossibleByTime,
+    register,
+generateToken,
+validateToken,
 fetchNewsletters,
   }
 }
