@@ -12,7 +12,8 @@ else if (process.env.NODE_ENV === 'development') {
   baseAPIURL = 'http://localhost:8080/api';
 
 }
-const create = (baseURL = baseAPIURL) => {
+// hardcoding backend url, not a good idea, but would do for a prototype
+const create = (baseURL = "https://umsbackend.herokuapp.com/api") => {
   // ------
   // STEP 1
   // ------
