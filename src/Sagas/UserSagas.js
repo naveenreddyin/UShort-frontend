@@ -19,7 +19,7 @@ export function * register(api, {email, password}){
 export function * generateToken(api, {email, password}){
 
 const response = yield call(api.generateToken, email)
-console.log(response.data)
+// console.log(response.data)
 
   if(response.status == 200){
     yield put(UserActions.setRegisterStatus(response.status, "Please check your email to verify token."))
@@ -39,7 +39,7 @@ console.log(response.data)
 
 export function * validateToken(api, {token}){
   const response = yield call(api.validateToken, token)
-  console.log(response.data)
+  // console.log(response.data)
   if(response.status == 200){
     yield put(UserActions.setRegisterStatus(response.status, "Token verified...logging you in."))
   }
