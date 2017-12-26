@@ -5,15 +5,16 @@ import apisauce from 'apisauce'
 var baseAPIURL = '';
 // console.log(process.env)
 if(process.env.NODE_ENV === 'production'){
-  baseAPIURL = 'https://umsbackend.herokuapp.com/api';
+  baseAPIURL = 'http://localhost:8080/api';
 
 }
 else if (process.env.NODE_ENV === 'development') {
   baseAPIURL = 'http://localhost:8080/api';
 
 }
+
 // hardcoding backend url, not a good idea, but would do for a prototype
-const create = (baseURL = "https://umsbackend.herokuapp.com/api") => {
+const create = (baseURL = baseAPIURL) => {
   // ------
   // STEP 1
   // ------
@@ -56,49 +57,17 @@ const create = (baseURL = "https://umsbackend.herokuapp.com/api") => {
   // Since we can't hide from that, we embrace it by getting out of the
   // way at this level.
   //
-  // const getCity = (city) => api.get('weather', {q: city})
+ 
 
-//  const checkIfEmailExists = (email) => api.get('check_if_username_exists/', {email: email})
-//
-//  const createCustomer = (email, password, name, birthday, mobile, picture) => api.post('customers/',
-//    {'user':
-//    {'username': email,
-//    "email": email,
-//    "password": password,
-//    "first_name": name},
-//    "date_of_birth": birthday,
-//    "phone_number": mobile,
-//    "picture": picture
-//  })
-//  const loginAndGetToken = (username, password) => api.post('obtain-auth-token/',
-//    {'username': username, 'password': password})
-//
-//  const getCustomerDetails = (email, token) => api.get('customer/'+email+'/', {}, {headers: {'Authorization': 'Token '+token}})
-//
-//  const getAllSalons = (city, latitude, longitude, token) => api.get('salons/'+latitude+'/'+longitude+'/'+city+'/', {},
-//    {headers: {'Authorization': 'Token '+token}})
-//  const getAllRestaurants = (city, latitude, longitude, token) => api.get('businesses/'+latitude+'/'+longitude+'/'+city+'/', {},
-//    {headers: {'Authorization': 'Token '+token}})
-
-  const testApi = () => api.get('', {})
-//  const bookAppointmentForDoctor = (doctor_id, customer_name, from_date,
-//  to_date, hexColor, bookable) => api.post('appointment/'+doctor_id+'/',
-//  {
-//    'title': customer_name,
-//    'start': from_date,
-//    'end': to_date,
-//    'bookable': bookable,
-//    'hexColor': hexColor
-//  }
-//  )
-
-const register = (email, password) => api.post('userses', {'email': email, 'password': password})
 
 const generateToken = (email) => api.get('generate/'+email)
 
 const validateToken = (token) => api.get('validate/'+token)
 
-  const fetchNewsletters = () => api.get('userses/', {})
+const createURL = (URL) => api.post('shorten/?url='+URL, {})
+
+  const fetchAll = () => api.get('fetchAllShortened/', {})
+  const deleteURL = (code) => api.delete('delete/'+code, {})
 //
 //  const checkIfBookingIsPossibleByTime = (date, time) => api.get('book_appointment_for_customer/'+date+" "+time)
   // ------
@@ -121,10 +90,11 @@ const validateToken = (token) => api.get('validate/'+token)
 //    loginAndGetToken,
 //    getCustomerDetails,
 //    getAllRestaurants,
-    register,
+    fetchAll,
 generateToken,
 validateToken,
-fetchNewsletters,
+createURL,
+deleteURL
   }
 }
 

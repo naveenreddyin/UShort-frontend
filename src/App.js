@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {userEmail: '', password: '', token: '', registerEmail: '',
-    registerPassword: '', confirmRegisterPassword: '' };
+    registerPassword: '', confirmRegisterPassword: '', urlValue: '' };
   }
 
 
@@ -93,6 +93,31 @@ class App extends Component {
     this.setState({token: event.target.value})
   }
 
+  componentDidMount(){
+
+    this.props.fetchAll();
+
+  }
+
+  handleURLChange(event){
+
+    this.setState({urlValue: event.target.value})
+  }
+
+  handleSubmit(){
+
+    console.log("clicked")
+    this.props.createShort(this.state.urlValue);
+
+
+  }
+
+  handleDelete(code, event){
+
+    console.log(code)
+    this.props.deleteCode(code)
+  }
+
 
   render() {
 
@@ -115,10 +140,10 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to UMS!</h2>
+          <h2>Welcome to UShort!</h2>
         </div>
         <p className="App-intro">
-          Please login or register below.
+          Please enter URL below.
         {this.props.registerStatus != null &&  <Grid>
             <Row>
               <Col xs={12}>
@@ -128,79 +153,34 @@ class App extends Component {
               </Col>
             </Row>
           </Grid>
-        }
-
-          <Grid>
-            <Row>
-              <Col xs={6} md={4}>
-              </Col>
-              <Col xs={6} md={4}>
-                <Tabs defaultActiveKey={1} id="uncontrolled-tab-example">
-                  <Tab eventKey={1} title="Login">
-                    {this.props.token == null ? (
-                      <div>
-                      <FormGroup controlId="formControlEmail">
-                        <ControlLabel>Email</ControlLabel>
-                        <FormControl  type="email" value={this.state.userEmail} onChange={this.onEmailChange.bind(this)} placeholder="Enter Email"/>
-                        <HelpBlock>Enter Email</HelpBlock>
-                      </FormGroup>
-
-                      <FormGroup controlId="formControlPassword">
-                        <ControlLabel>Password</ControlLabel>
-                        <FormControl  value={this.state.password} onChange={this.onPasswordChange.bind(this)} type="password" placeholder="Enter Password" onChange={this.onPasswordChange.bind(this)}/>
-                        <HelpBlock>Enter Password</HelpBlock>
-                      </FormGroup>
-
-                      <Button type="submit" onClick={this.submitButtonClicked.bind(this)}>
-                          Submit
-                      </Button>
-                      </div>
-                    ):(
-                      <div>
-                      <FormGroup controlId="formControlToken">
-                        <ControlLabel>Enter Token</ControlLabel>
-                        <FormControl  value={this.state.token} onChange={this.onTokenChange.bind(this)} type="text" placeholder="Enter Token"/>
-                      </FormGroup>
-                      <Button type="submit" onClick={this.verifyTokenClicked.bind(this)}>
-                          Submit
-                      </Button>
-                      </div>
-                    )}
-
-
-                  </Tab>
-                  <Tab eventKey={2} title="Register">
-                    <FormGroup controlId="formControlRegisterEmail">
-                      <ControlLabel>Email</ControlLabel>
-                      <FormControl  type="email" value={this.state.registerEmail} onChange={this.onRegisterEmailChange.bind(this)} placeholder="Enter Email"/>
-                      <HelpBlock>Enter Email</HelpBlock>
-                    </FormGroup>
-
-                    <FormGroup controlId="formControlRegisterPassword">
-                      <ControlLabel>Password</ControlLabel>
-                      <FormControl  type="password" placeholder="Enter Password" onChange={this.onRegisterPasswordChange.bind(this)}/>
-                      <HelpBlock>Enter Password</HelpBlock>
-                    </FormGroup>
-
-                    <FormGroup controlId="formControlRegisterConfirmPassword">
-                      <ControlLabel>Confirm Password</ControlLabel>
-                      <FormControl  type="password" placeholder="Confirm Password" onChange={this.onRegisterConfirmPasswordChange.bind(this)}/>
-                      <HelpBlock>Enter same Password</HelpBlock>
-                    </FormGroup>
-
-                    <Button type="submit" onClick={this.submitRegisterButtonClicked.bind(this)}>
-                        Submit
-                    </Button>
-
-                  </Tab>
-                </Tabs>
-              </Col>
-              <Col xs={6} md={4}>
-              </Col>
-            </Row>
-          </Grid>
+        }     
 
         </p>
+
+        <div className="row">
+          <div className="col-lg-4 col-lg-offset-4">
+              <input type="text" value={this.state.urlValue} onChange={this.handleURLChange.bind(this)} />
+              <input type="button" value="Submit" onClick={this.handleSubmit.bind(this)}/>
+          </div>
+          <div className="col-lg-4 col-lg-offset-4">
+            {this.props.data && this.props.data.map( (row, i) =>
+                   <div className="panel panel-default" key={i}>
+                      <div className="panel-body" role="tab">
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <h4 className="panel-title">
+                              <a href={row.prefixURL+"/goto/"+row.code}>http://u.shrt/{row.code}</a>
+                            </h4>
+                          </div>
+                          <div className="col-lg-6">
+                              <a className="btn btn-primary" onClick={this.handleDelete.bind(this, row.code)}>delete</a>
+                          </div>
+                        </div>
+                      </div>
+                   </div>
+              )}
+          </div>
+        </div>
       </div>
     );
   }
@@ -211,7 +191,8 @@ const mapStateToProps = (state) => {
     fetching: state.user.fetching,
     registerStatus: state.user.registerUserStatus,
     registerMessage: state.user.registerUserMessage,
-    token: state.user.token
+    token: state.user.token,
+    data: state.user.data
   }
 }
 
@@ -219,7 +200,10 @@ const mapDispatchToProps = (dispatch) => {
   return {
     registerUser: (email, password) => dispatch(UserActions.register(email, password)),
     generateToken: (email, password) => dispatch(UserActions.generateToken(email, password)),
-    validateToken: (token) => dispatch(UserActions.validateToken(token))
+    validateToken: (token) => dispatch(UserActions.validateToken(token)),
+    fetchAll: (token) => dispatch(UserActions.fetchAll()),
+    createShort: (URL) => dispatch(UserActions.createShort(URL)),
+    deleteCode: (code) => dispatch(UserActions.deleteCode(code))
   }
 }
 

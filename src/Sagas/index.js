@@ -14,7 +14,7 @@ import { UserTypes } from '../Redux/UserRedux'
 //import { CartTypes } from '../Redux/CartRedux'
 
 /* ------------- Sagas ------------- */
-import { register, generateToken, validateToken } from './UserSagas'
+import { fetchAll, createURL, deleteCode} from './UserSagas'
 //import { login, register, checkIfEmailExists } from './LoginSagas'
 //import { getTemperature } from './TemperatureSagas'
 //import { openScreen } from './OpenScreenSagas'
@@ -35,8 +35,8 @@ const api = API.create()
 export default function * root () {
     console.log("coming inside root saga")
     yield [
-        takeEvery(UserTypes.REGISTER, register, api),
-        takeEvery(UserTypes.GENERATE_TOKEN, generateToken, api),
-        takeEvery(UserTypes.VALIDATE_TOKEN, validateToken, api)
+        takeEvery(UserTypes.FETCH_ALL, fetchAll, api),
+        takeEvery(UserTypes.CREATE_SHORT, createURL, api),
+        takeEvery(UserTypes.DELETE_CODE, deleteCode, api)
     ]
 }
